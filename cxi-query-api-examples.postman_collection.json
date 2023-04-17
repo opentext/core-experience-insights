@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "43142ebe-fb22-4546-aacb-b6355afe5656",
+		"name": "cxi-query-api-examples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get OAuth Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"bearerToken\", jsonData.access_token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "{{otdsAuthBaseUrl}}/otdstenant/{{tenantId}}/login?grant_type=client_credentials&client_secret={{clientSecret}}&client_id={{clientId}}",
+					"host": [
+						"{{otdsAuthBaseUrl}}"
+					],
+					"path": [
+						"otdstenant",
+						"{{tenantId}}",
+						"login"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Journey Ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journey_id\"\r\n    }\r\n    ],\r\n  \"from\": \"otec_bd_journey_stage_details\",\r\n  \"groupBy\": [\"journey_id\"]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}?size=20",
+					"host": [
+						"{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Journey Stage Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journey_id\"\r\n    },\r\n    {\r\n      \"field\": \"journey_name\"\r\n    },\r\n    {\r\n      \"field\": \"stage_ordinal\"\r\n    },\r\n    {\r\n      \"field\": \"stage_id\"\r\n    },\r\n    {\r\n      \"field\": \"stage_name\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_journey_stage_details\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}?size=20",
+					"host": [
+						"{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Journey Stage Count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journeyid\"\r\n    },\r\n    {\r\n      \"field\": \"ordinal\"\r\n    },\r\n    {\r\n      \"field\": \"stageid\"\r\n    },\r\n    {\r\n      \"field\": \"stage\"\r\n    },\r\n    {\r\n      \"field\": \"stagecount\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_stagecounts\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}?size=20",
+					"host": [
+						"{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Complex Scan - Max",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journeyid\"\r\n    },\r\n    {\r\n      \"function\": \"max\",\r\n      \"field\": \"stagecount\",\r\n      \"as\": \"max_stage_count\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_stagecounts\",\r\n  \"groupBy\": [\r\n    \"journeyid\"\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}?size=20",
+					"host": [
+						"{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Complex Scan - Sum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journeyid\"\r\n    },\r\n    {\r\n      \"function\": \"sum\",\r\n      \"field\": \"stagecount\",\r\n      \"as\": \"all_stage_count\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_stagecounts\",\r\n  \"groupBy\": [\r\n    \"journeyid\"\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}?size=20",
+					"host": [
+						"{{cxiRestApiBaseUrl}}{{cxiQueryUrl}}"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "otdsAuthBaseUrl",
+			"value": "https://otdsauth.ot2.opentext.com"
+		},
+		{
+			"key": "cxiRestApiBaseUrl",
+			"value": "https://experiencecenterapi.ot2.opentext.com"
+		},
+		{
+			"key": "cxiQueryUrl",
+			"value": "/api/v1/bd/analyses/query"
+		},
+		{
+			"key": "tenantId",
+			"value": ""
+		},
+		{
+			"key": "clientId",
+			"value": ""
+		},
+		{
+			"key": "clientSecret",
+			"value": ""
+		}
+	]
+}
