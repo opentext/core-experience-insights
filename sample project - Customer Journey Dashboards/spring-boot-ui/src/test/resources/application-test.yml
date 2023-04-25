@@ -1,0 +1,18 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+      
+rest-server:
+  encryption: true
+  ## REST exception debugging
+  exception:
+    debug: true
+  
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
+    com.opentext: DEBUG
+  
+        

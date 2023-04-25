@@ -1,0 +1,19 @@
+api-server:
+  scheme: https
+  # eu url would be experiencecenterapi.ot2.opentext.eu
+  host: experiencecenterapi.ot2.opentext.com    
+  port: 443
+  context: /api/v1/bd/analyses/
+  oauth2:
+    # eu url would be otdsauth.ot2.opentext.eu
+    token-url: https://otdsauth.ot2.opentext.com/otdstenant/<tenantid>/oauth2/token
+    grant-type: client_credentials
+    client-id: clientid
+    client-secret: clientsecret
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.security: WARN
+    com.opentext: WARN
+  

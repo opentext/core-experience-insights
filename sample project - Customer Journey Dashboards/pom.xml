@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+    <groupId>com.opentext.sample.ui</groupId>
+	<artifactId>expctr-sample-report</artifactId>
+    <version>1.0.0</version>
+    <name>Expctr Sample Application Parent Project</name>
+    <description>Parent Project for Sample Application Front-end</description>
+
+    <packaging>pom</packaging>
+    <properties>
+       <java.version>1.8</java.version>
+
+       <!-- Sample properties -->
+       <sample.version.major>22</sample.version.major>
+       <sample.version.minor>1</sample.version.minor>
+       <sample.version.patch>0</sample.version.patch>
+       <sample.version.pre-release></sample.version.pre-release>
+       <sample.version.semantic.short>${sample.version.major}.${sample.version.minor}.${sample.version.patch}</sample.version.semantic.short>
+    </properties>
+	
+    <modules>
+       <module>spring-boot-ui</module>
+    </modules>
+
+     <build>
+       <plugins>
+          <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>0.11</version>
+                <executions>
+                    <execution>
+                       <phase>verify</phase>
+                       <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <licenses>
+                    	<!-- CopyrightHeader cannot be used because of the (c) in the Open Text header -->
+                    	<license
+                            implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                            <licenseFamilyCategory>OpenText</licenseFamilyCategory>
+                            <licenseFamilyName>OpenText</licenseFamilyName>
+                            <patterns>
+                               <!-- Uses simple String.contain so no wildcards; therefore, include 
+                                    up to current decade -->
+                               <pattern>Copyright (c) 202</pattern>
+                               <pattern>Open Text. All Rights Reserved.</pattern>
+                            </patterns>
+                    	</license>
+                    </licenses>
+                    <licenseFamilies>
+                    	<licenseFamily
+                            implementation="org.apache.rat.license.Apache20LicenseFamily" />
+                    	<licenseFamily
+                            implementation="org.apache.rat.license.SimpleLicenseFamily">
+                            <familyName>OpenText</familyName>
+                    	</licenseFamily>
+                    </licenseFamilies>
+                    <reportFile>${project.build.directory}/${project.build.finalName}.rat</reportFile>
+                    <excludeSubProjects>false</excludeSubProjects>
+                    <excludes>
+                    	<exclude>**/DEPENDENCIES</exclude>
+                    	<exclude>**/target/**/*</exclude>
+                    	<!-- GIT files -->
+                    	<exclude>**/.git/**/*</exclude>
+                    	<!-- Eclipse files -->
+                    	<exclude>**/.*</exclude>
+                    	<exclude>**/eclipse-classes/**/*</exclude>
+                    	<exclude>**/dependency-reduced-pom.xml</exclude>
+                    	<exclude>**/.settings/**</exclude>
+                    	<exclude>**/bin/**</exclude>
+                    	<!-- resources file -->
+                    	<exclude>**/goal.txt</exclude>
+                    	<!--manual resources -->
+                    	<exclude>**/pom.xml</exclude>
+                    	<exclude>**/*.yml</exclude>
+                    	<exclude>**/*.css</exclude>
+                    	<exclude>**/*.conf</exclude>
+                    	<exclude>**/reactjs/**/*</exclude>
+                    	<exclude>**/*.min.js</exclude>
+                    	<exclude>**/static/**/*</exclude>
+                    	<exclude>**/*.json</exclude>
+                    	<exclude>**/*.woff</exclude>
+                    	<exclude>**/fonts/**/*</exclude>
+                    	<exclude>**/messages/**/*</exclude>
+                        <exclude>**/*.log</exclude>
+                    	<!-- exclude node_modules directories and JS package manager files -->
+                    	<exclude>**/node_modules/**/*</exclude>
+                    	<exclude>**/node/**/*</exclude>
+                    	<exclude>**/dist/**/*</exclude>
+                    	<exclude>**/yarn.lock</exclude>
+                    	<exclude>**/*.js.map</exclude>
+                    	<!-- OpenText DX Customer Data Engine exclusions -->
+                    	<exclude>**/README.md</exclude>
+                    	<exclude>**/src/main/webapp/swagger/**/*</exclude>
+                    	<exclude>**/helm/**/*</exclude>
+                    	<exclude>**/docker/**/*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>set-sample.version.build</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>sample.version.build</name>
+                            <pattern>YYMMddHHmmss</pattern>
+                        </configuration>
+                    </execution>                        
+                    <execution>
+                        <id>set-sample.version.semantic-properties</id>
+                        <goals>
+                            <goal>regex-properties</goal>
+                        </goals>
+                        <configuration>
+                            <regexPropertySettings>
+                                <regexPropertySetting>
+                                    <name>sample.version.semantic.medium</name>
+                                    <value>${sample.version.semantic.short}-${sample.version.pre-release}</value>
+                                    <regex>^([0-9]+\.[0-9]+\.[0-9]+)(-[\S]+)?-?$</regex>
+                                    <replacement>$1$2</replacement>
+                                    <failIfNoMatch>true</failIfNoMatch>
+                                </regexPropertySetting>
+                                <regexPropertySetting>
+                                    <name>sample.version.semantic.long</name>
+                                    <value>${sample.version.semantic.short}-${sample.version.pre-release}</value>
+                                    <regex>^([0-9]+\.[0-9]+\.[0-9]+)(-[\S]+)?-?$</regex>
+                                    <replacement>$1$2.${sample.version.build}</replacement>
+                                    <failIfNoMatch>true</failIfNoMatch>
+                                </regexPropertySetting>
+                            </regexPropertySettings>
+                        </configuration>
+                    </execution>
+                </executions>
+          </plugin>
+        </plugins>
+   </build>
+</project>

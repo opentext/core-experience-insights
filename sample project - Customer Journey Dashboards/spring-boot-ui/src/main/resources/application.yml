@@ -1,0 +1,57 @@
+server:
+  port: 8021
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json
+    min-response-size: 1024
+  error:
+    whitelabel:
+      enabled: false
+
+  
+# A profile name needs to be set via a command-line arg, a la k8n: -Dspring.profiles.active=profileName
+spring:
+  profiles:
+    active: production
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+#
+# These are used to set the CORS values for the REST Controllers.
+#
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-origins: 
+        allowed-methods:
+    
+rest-server:
+  api-prefix: /api
+  version-name: v1
+  encryption: true
+  csp-header: "img-src 'self' blob: data:; script-src 'self' 'unsafe-inline' ; style-src 'self' 'unsafe-inline'; worker-src 'self' 'unsafe-inline' * blob:;"
+  exception:
+    debug: false
+    
+#
+# This is the target api server. Adjust parameters as needed.
+#
+api-server:
+  scheme: https
+  host: expctrapiserver
+  port: 9023
+  context: /
+  query: query?count=-1
+  oauth2:
+    token-url: http://otdsserver/otdsws/oauth2/token
+    grant-type: client_credentials
+    client-id: yourclientid
+    client-secret: yourclientsecret
+    cachable: false
+      
+logging:
+  level:
+    root: ERROR
+    org.springframework.security: INFO
+    com.opentext: INFO
+    com.opentext.sample.ui: INFO
