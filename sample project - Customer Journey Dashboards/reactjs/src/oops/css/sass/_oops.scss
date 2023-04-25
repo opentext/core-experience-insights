@@ -1,0 +1,55 @@
+html #root {
+  height: calc(100vh - 64px) !important;
+}
+
+.opentext-expctr {
+  min-height: 100%;
+  .homepage{
+    padding-top: 1.5em;
+  }
+}
+
+.error-message {
+  padding-top: 2.5rem;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+}
+
+.error-sub-message {
+  padding-top: 1rem;
+  text-align: center;
+  color: #ccc;
+  font-size: 18px;
+}
+
+.error-buttons {
+  padding-top: 2rem;
+}
+
+.error-back-icon {
+  height: 80px;
+  width: 80px;
+  min-width: 80px;
+  background-position: 0 0;
+  background-image: url(/images/icons/back_white.svg);
+}
+
+.error-home-icon {
+  height: 80px;
+  width: 80px;
+  min-width: 80px;
+  background-position: 0 0;
+  background-image: url(/images/icons/home_white.svg);
+}
+
+.error-icon-message {
+  margin-left: 16px;
+  text-align: left;
+  color: #ccc;
+  font-size: 18px;
+}
+
+.error-buttons .error-back-icon, .error-buttons .error-home-icon, .error-buttons .error-icon-message {
+  cursor: pointer;
+}

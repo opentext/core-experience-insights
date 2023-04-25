@@ -1,0 +1,171 @@
+html body {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1.2rem;
+  height: calc(100% - 64px);
+  margin: 0;
+  box-sizing: border-box;
+  border-radius: 0px;
+  box-shadow: none;
+  background-repeat: no-repeat;
+  padding-top: 64px;
+}
+
+.has-bg-gradient.ec-dark {
+  background: -webkit-linear-gradient(29deg, #090e2c 0%, #122c69 59%, #078db3 100%);
+  background: -o-linear-gradient(29deg, #090e2c 0%, #122c69 59%, #078db3 100%);
+  background: -ms-linear-gradient(29deg, #090e2c 0%, #122c69 59%, #078db3 100%);
+  background: -moz-linear-gradient(29deg, #090e2c 0%, #122c69 59%, #078db3 100%);
+  background: linear-gradient(61deg, #090e2c 0%, #122c69 59%, #078db3 100%);
+  background-color: #111b58;
+}
+
+.navbar {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  a {
+    &:focus-visible {
+      outline: 1px solid #fff;
+      outline-offset: -2px;
+    } 
+  }
+}
+
+.otxec-main-page {
+  background-color: #fff;
+  height: calc(100vh - 64px); //subtract the header
+  display: flex;
+}
+
+/**OT STUFF**/
+.ot-brand {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 64px;
+  width: 100%;
+  background: transparent;
+  color: #333;  
+  &.ot-brand--is-dark {
+    color: #fff;
+     .ot-brand__divider {
+      background: white;
+    }
+  }
+  > * {
+    margin-right: 8px;
+  }
+}
+
+.ot-brand__logo {
+  height: 24px;
+  width: auto;
+  img {
+    height: 100%;
+  }
+}
+
+.ot-brand__divider {
+  background: black;
+  width: 1px;
+  height: calc(100% - 33px);
+  margin-right: 16px;
+}
+
+.ot-brand__primary {
+  font-style: normal;
+  font-weight: normal;
+  padding-bottom: 3px;
+  font-size: 21px;
+}
+
+
+.otxec-hide {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+
+.otxec-d3-axis {
+  font-style: normal;
+  font-weight: normal;
+  padding-bottom: 3px;
+  font-size: 0.75em;
+}
+.otxec-d3-axis-labels {
+  font-style: normal;
+  font-weight: normal;
+  padding-bottom: 3px;
+  font-size: 1em;
+}
+.otxec-d3-toolTip {
+  position: absolute;
+  display: none;
+  min-width: 80px;
+  color: black;
+  height: auto;
+  font-style: normal;
+  font-weight: normal;  
+  font-size: 16px;
+  background: #f8f9fa;
+  border: 1px solid #828488 ;
+  padding: 5px;
+  text-align: center;
+}
+
+.otxec-d3-chart-container {
+  width       : 80%;
+  height      : 50%;
+  overflow    : visible;
+}
+
+.otxec-d3-labels {
+  position: absolute;
+  color: black;
+  height: auto;
+  font-style: normal;
+  font-weight: normal;
+  font-family: 'Lato', sans-serif; 
+  font-size: 16px;
+  border: 1px solid rgba(0,0,0,0.3);
+  padding: 1px;
+  text-align: center;
+}
+.otxec-d3-legends {
+  @extend .otxec-d3-labels;
+  font-size: 1.2rem;
+  border: 1px solid #111b58;
+  padding: 10px;
+  background-color:#e1e8f6;
+}
+
+.otxec-dropdown-content {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  color: white;
+  height: auto;
+  font-style: normal;
+  font-weight: normal;
+  padding-bottom: 3px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.otxec-loading-bar {
+  position: absolute;
+  width: 90%;
+  z-index: 1300; 
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+.otxec-chart-icon {
+  width: 38px;
+  height: 38px;
+  padding-right: 8px;
+}
+.otxec-dataset-label {
+   margin: auto !important;
+   padding: 5px !important;
+   font-size: 16px !important;  
+}
