@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "6c6b88c5-710e-4bfc-85f5-0f06cdeca5f1",
+		"name": "cxi-query-api-examples-ocp-gcp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get OAuth Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"if (responseBody) {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    if (responseBody.has(\"access_token\")) {\r",
+							"        postman.setGlobalVariable(\"tmp_tenant_client_token\", jsonData.access_token);\r",
+							"        console.log(\"Tenant client token = \" + jsonData.access_token);\r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_id\": \"{{ext_journey_app_confclient_id}}\",\r\n    \"client_secret\": \"{{ext_journey_app_confclient_secret}}\", \r\n    \"grant_type\": \"client_credentials\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{otds_url}}/tenants/{{tenant_id}}/oauth2/token",
+					"host": [
+						"{{otds_url}}"
+					],
+					"path": [
+						"tenants",
+						"{{tenant_id}}",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Journey Ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journey_id\"\r\n    }\r\n    ],\r\n  \"from\": \"otec_bd_journey_stage_details\",\r\n  \"groupBy\": [\"journey_id\"]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{journey_url}}/api/v1/bd/analyses/query?size=20",
+					"host": [
+						"{{journey_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bd",
+						"analyses",
+						"query"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Journey Stage Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journey_id\"\r\n    },\r\n    {\r\n      \"field\": \"journey_name\"\r\n    },\r\n    {\r\n      \"field\": \"stage_ordinal\"\r\n    },\r\n    {\r\n      \"field\": \"stage_id\"\r\n    },\r\n    {\r\n      \"field\": \"stage_name\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_journey_stage_details\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{journey_url}}/api/v1/bd/analyses/query?size=20",
+					"host": [
+						"{{journey_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bd",
+						"analyses",
+						"query"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Journey Stage Count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journeyid\"\r\n    },\r\n    {\r\n      \"field\": \"ordinal\"\r\n    },\r\n    {\r\n      \"field\": \"stageid\"\r\n    },\r\n    {\r\n      \"field\": \"stage\"\r\n    },\r\n    {\r\n      \"field\": \"stagecount\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_stagecounts\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{journey_url}}/api/v1/bd/analyses/query?size=20",
+					"host": [
+						"{{journey_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bd",
+						"analyses",
+						"query"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Stage Counts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{bearerToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": \"stage_counts\",\r\n  \"journeyId\": \"{{journey_id}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{journey_url}}/api/v1/bd/analyses/query?size=20",
+					"host": [
+						"{{journey_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bd",
+						"analyses",
+						"query"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Complex Scan - Max",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journeyid\"\r\n    },\r\n    {\r\n      \"function\": \"max\",\r\n      \"field\": \"stagecount\",\r\n      \"as\": \"max_stage_count\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_stagecounts\",\r\n  \"groupBy\": [\r\n    \"journeyid\"\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{journey_url}}/api/v1/bd/analyses/query?size=20",
+					"host": [
+						"{{journey_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bd",
+						"analyses",
+						"query"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - Complex Scan - Sum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test (\"HTTP Status Test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"select\": [\r\n    {\r\n      \"field\": \"journeyid\"\r\n    },\r\n    {\r\n      \"function\": \"sum\",\r\n      \"field\": \"stagecount\",\r\n      \"as\": \"max_stage_count\"\r\n    }\r\n  ],\r\n  \"from\": \"otec_bd_stagecounts\",\r\n  \"groupBy\": [\r\n    \"journeyid\"\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{journey_url}}/api/v1/bd/analyses/query?size=20",
+					"host": [
+						"{{journey_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bd",
+						"analyses",
+						"query"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{tmp_tenant_client_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_host",
+			"value": "ca.api.opentext.com"
+		},
+		{
+			"key": "journey_url",
+			"value": "https://{{api_host}}/journey"
+		},
+		{
+			"key": "otds_url",
+			"value": "https://{{api_host}}"
+		},
+		{
+			"key": "tenant_id",
+			"value": ""
+		},
+		{
+			"key": "ext_journey_app_confclient_id",
+			"value": ""
+		},
+		{
+			"key": "ext_journey_app_confclient_secret",
+			"value": ""
+		},
+		{
+			"key": "journey_id",
+			"value": ""
+		}
+	]
+}
