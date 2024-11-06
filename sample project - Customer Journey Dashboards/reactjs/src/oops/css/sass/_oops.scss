@@ -4,7 +4,8 @@ html #root {
 
 .opentext-expctr {
   min-height: 100%;
-  .homepage{
+
+  .homepage {
     padding-top: 1.5em;
   }
 }
@@ -32,7 +33,7 @@ html #root {
   width: 80px;
   min-width: 80px;
   background-position: 0 0;
-  background-image: url(/images/icons/back_white.svg);
+  background-image: url('~ImageDir/icons/back_white.svg');
 }
 
 .error-home-icon {
@@ -40,7 +41,7 @@ html #root {
   width: 80px;
   min-width: 80px;
   background-position: 0 0;
-  background-image: url(/images/icons/home_white.svg);
+  background-image: url('~ImageDir/icons/home_white.svg');
 }
 
 .error-icon-message {
@@ -50,6 +51,8 @@ html #root {
   font-size: 18px;
 }
 
-.error-buttons .error-back-icon, .error-buttons .error-home-icon, .error-buttons .error-icon-message {
+.error-buttons .error-back-icon,
+.error-buttons .error-home-icon,
+.error-buttons .error-icon-message {
   cursor: pointer;
 }

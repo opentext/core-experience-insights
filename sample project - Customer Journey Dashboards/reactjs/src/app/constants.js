@@ -12,6 +12,7 @@ export const ENV_REST_URI = 'apiBaseUri'
 export const ENV_MESSAGES_KEY = 'messages'
 export const DEFAULT_LOCALE = 'en'
 export const ENV_ERROR_MESSAGE = 'errorMessage'
+export const ENV_CONTEXT_PATH = 'contextPath'
 
 export const COLORS = [
     '#111b58',

@@ -1,0 +1,20 @@
+
+spring:
+  config:
+    activate:
+      on-profile: testOT
+
+
+api-server:
+  journey-url: https://apihost
+  auth_url: http://dev.otds.com:8080
+  client-id: testOtClientId
+  client-secret: testOtClientSecret
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
+    com.opentext.sample.ui: TRACE
+  
+        

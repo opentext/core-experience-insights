@@ -12,7 +12,7 @@
 
     <packaging>pom</packaging>
     <properties>
-       <java.version>1.8</java.version>
+       <java.version>17</java.version>
 
        <!-- Sample properties -->
        <sample.version.major>22</sample.version.major>
@@ -82,6 +82,7 @@
                     	<exclude>**/pom.xml</exclude>
                     	<exclude>**/*.yml</exclude>
                     	<exclude>**/*.css</exclude>
+                    	<exclude>**/test/**</exclude>
                     	<exclude>**/*.conf</exclude>
                     	<exclude>**/reactjs/**/*</exclude>
                     	<exclude>**/*.min.js</exclude>
@@ -100,8 +101,10 @@
                     	<!-- OpenText DX Customer Data Engine exclusions -->
                     	<exclude>**/README.md</exclude>
                     	<exclude>**/src/main/webapp/swagger/**/*</exclude>
-                    	<exclude>**/helm/**/*</exclude>
+                    	<exclude>**/helm/**/*</exclude>>
+                    	<exclude>**/templates/**/*</exclude>
                     	<exclude>**/docker/**/*</exclude>
+                    	<exclude>catalog-info.yaml</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  namespace: dx-core-journey
+  name: sample-report
+  title: Sample Report
+  description: Sample Report
+spec:
+  type: library
+  owner: group:pht-team/mopac
+  domain: product/32151567-a417-11e9-af75-00505682bce9
+  lifecycle: production

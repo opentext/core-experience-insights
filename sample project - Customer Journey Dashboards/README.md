@@ -24,32 +24,61 @@ Via maven: `mvn spring-boot:start -Dspring-boot.run.profiles=<profile>`
 
 Via executable jar: `java -jar target spring-boot-ui-1.0.0.jar`
 
-A docker image in coming soon too.
-
 To skip test execution at startup add the `-DskipTests` argument.
 
 ### Stopping
 To stop this app (for now): `mvn spring-boot:stop` or via docker or other means.
 
-## OAuth2 Configuration
-Since this sample app makes an OAuth2-based REST call to the configured endpoint, the coordinates for that server need to be configured. To do that in development, create a new file called application-dev.yml in the src/main/resources directory and override the corresponding OAuth2 values as well as the REST endpoint itself:
+
+## Configuration
+
+Since this sample app makes both an OAuth2-based REST call to an OTDS endpoint and authenticated REST call to an API gateway, the coordinates for those servers need to be configured. This can be done by either creating a new profile yaml file called application-user.yml in the src/main/resources directory or editing the default application.yml file. Just override the corresponding configuration values as shown below. 
+
+Note if using a custom profile, include a profile argument in the mvn startup command:
+`mvn spring-boot:start -Dspring-boot.run.profiles=user`
+
+
+### Variables that must be configured for OCP on OT
+In the application-production.yml file (or whatever profile is being used), set the following lines:
 
 ```
 api-server:
-  scheme: https
-  host: myreportserver.com
-  port: 443
-  context: /
-  oauth2:
-    client-id: myclientid
-    client-secret: myclientsecret
- ```
+- journey-url: https://experiencecenterapi.ot2.opentext.com - change for other datacenters
+- auth-url: https://otdsauth.ot2.opentext.com - change for other datacenters
+- tenant-id: - use your Tenant ID.
+- client-id: - use your generated Client ID
+- client-secret: - use the respective secret for your Client ID
+```
 
-This can then be applied using a profile argument in the mvn startup command:
-`mvn spring-boot:start -Dspring-boot.run.profiles=dev`
+### Variables that must be configured for OCP on GCP
+In the application-gcp.yml file (or whatever profile is being used), set the following lines:
 
-When this application is deployed, these values will be set using a production yml file instead (per OTX k8s standards, etc).
+```
+api-server:
+- api-host: ca.api.opentext.com - change for other regions
+- tenant-id: use your Tenant ID
+- client-id: use the value of confidential credentials - client_id from the Extending App Details Form in the Admin Center
+- client-secret: use the value of confidential credentials - client_secret from the Extending App Details Form in the Admin Center
+```
+### Query
 
+The default API query body is
+```
+{
+        select : [
+            {
+                field : 'journey_id',
+            },
+            {
+                field : 'journey_name',
+            },
+        ],
+        from    : 'otec_bd_journey_stage_details',
+        groupBy : ['journey_id'],
+    }
+```
+
+This can be changed inside the JavaScript. See `DatasetReport.js`. For other API queries, see the Swagger page on the corresponding API server.
 
 ## ReactJS
 The React JS code is in the `reactJs` directory. This is for building the compiled app.min.js and other UI assets that are deployed to the spring-boot-ui resources directory. Working with this directory is not needed to run the application. It is used strictly for UI development.

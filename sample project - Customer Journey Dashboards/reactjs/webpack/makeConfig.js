@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 
 const dotenv = require('dotenv')
 const path = require('path')
@@ -5,8 +6,8 @@ const webpack = require('webpack')
 
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const svgToMiniDataURI = require('mini-svg-data-uri')
 
 dotenv.config()
 const exposed = [
@@ -47,6 +48,7 @@ module.exports = {
             Oops     : path.resolve(__dirname, '../src/oops'),
             OopsApps : path.resolve(__dirname, '../src/oops/Components/Applications'),
             AppUtils : path.resolve(__dirname, '../src/app/utils'),
+            ImageDir : path.resolve(__dirname, '../public/images')
         }
     },
     output : {
@@ -58,6 +60,21 @@ module.exports = {
     },
     module : {
         rules : [
+            // this rule converts img references into inline data values. Downside: no caching of these images!
+            {
+                test      : /\.(svg|png|ico)/,
+                type      : 'asset/inline',
+                generator : {
+                    dataUrl : content => svgToMiniDataURI(content.toString())
+                }
+            }, 
+            {
+                test      : /\.(woff|woff2|eot|ttf|otf)$/i,
+                type      : 'asset/resource',
+                generator : {
+                    filename : 'fonts/[name][ext][query]',
+                }
+            },
             {
                 test    : /\.(js|jsx)$/,
                 exclude : /node_modules/,
@@ -105,43 +122,19 @@ module.exports = {
                 {
                     from : 'public/favicon.ico',
                     to   : path.resolve(__dirname, '../../spring-boot-ui/src/main/resources/static')
+                },
+                {
+                    from : path.resolve(__dirname, '../public/index.html'),
+                    to   : path.resolve(__dirname, '../../spring-boot-ui/src/main/resources/templates/index.html'),
+                    info : { minimized: true } // do not optimize/minimize this file or thymeleaf will break!
+                },
+                {
+                    from : path.resolve(__dirname, '../public/error.html'),
+                    to   : path.resolve(__dirname, '../../spring-boot-ui/src/main/resources/templates/error.html'),
+                    info : { minimized: true } // do not optimize/minimize this file or thymeleaf will break!
                 }
             ],
         }), 
-        new HtmlWebpackPlugin({
-            chunks   : ['app'],
-            filename : path.resolve(__dirname, '../../spring-boot-ui/src/main/resources/static/index.html'),
-            template : path.resolve(__dirname, '../public/index.html'),
-            minify   : {
-                removeComments                : false,
-                collapseWhitespace            : false,
-                removeRedundantAttributes     : true,
-                useShortDoctype               : true,
-                removeEmptyAttributes         : true,
-                removeStyleLinkTypeAttributes : true,
-                keepClosingSlash              : true,
-                minifyJS                      : false,
-                minifyCSS                     : true,
-                minifyURLs                    : true
-            }
-        }),
-        new HtmlWebpackPlugin({
-            chunks   : ['oops'],
-            filename : path.resolve(__dirname, '../../spring-boot-ui/src/main/resources/static/error.html'),
-            template : path.resolve(__dirname, '../public/error.html'),
-            minify   : {
-                removeComments                : false,
-                collapseWhitespace            : false,
-                removeRedundantAttributes     : true,
-                useShortDoctype               : true,
-                removeEmptyAttributes         : true,
-                removeStyleLinkTypeAttributes : true,
-                keepClosingSlash              : true,
-                minifyJS                      : false,
-                minifyCSS                     : true,
-                minifyURLs                    : true
-            }
-        }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional

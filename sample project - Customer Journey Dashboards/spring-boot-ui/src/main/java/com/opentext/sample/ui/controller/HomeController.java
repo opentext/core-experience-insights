@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.opentext.sample.ui.configuration.Constants;
 import com.opentext.sample.ui.configuration.RestConfigProperties;
 import com.opentext.sample.ui.messages.UiMessages;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This controller deals with endpoints that are non-REST based, mainly those associated with the ReactJS app itself.
@@ -55,8 +56,8 @@ public class HomeController {
    * @return
    */
   @GetMapping("/")
-  public String index(Model model, Locale locale) {
-    buildUserModel(model, locale);
+  public String index(Model model, HttpServletRequest request, Locale locale) {
+    buildUserModel(model, request, locale);
     return INDEX_PAGE;
   }
 
@@ -66,8 +67,8 @@ public class HomeController {
    * @return
    */
   @GetMapping(value = "/oops")
-  public String noauth(Model model, Locale locale) {
-    buildUserModel(model, locale);
+  public String noauth(Model model, HttpServletRequest request, Locale locale) {
+    buildUserModel(model, request, locale);
     return OOPS_PAGE;
   }
 
@@ -77,9 +78,10 @@ public class HomeController {
    * @param model
    * @param locale
    */
-  protected void buildUserModel(Model model, Locale locale) {
+  protected void buildUserModel(Model model, HttpServletRequest request, Locale locale) {
     String messageBundleJson = messages.getAllMessagesJson(locale);
     model.addAttribute(Constants.ENV_MESSAGES_KEY, messageBundleJson);
+    model.addAttribute("contextPath", request.getContextPath());
     model.addAttribute(Constants.ENV_REST_URI, this.apiPath);
   }
 }

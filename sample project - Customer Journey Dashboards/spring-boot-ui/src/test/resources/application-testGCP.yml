@@ -1,0 +1,20 @@
+
+spring:
+  config:
+    activate:
+      on-profile: testGCP
+
+
+api-server:
+  api-host: experiencecenterapi.foo.bar
+  tenantId: GCPTenantId
+  client-id: testGCPClientId
+  client-secret: testGCPClientSecret
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
+    com.opentext.sample.ui: TRACE
+  
+        

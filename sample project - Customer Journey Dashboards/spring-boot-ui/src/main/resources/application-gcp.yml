@@ -1,6 +1,5 @@
 api-server:
-  auth-url: https://otdsauth.ot2.opentext.com
-  journey-url: https://experiencecenterapi.ot2.opentext.com
+  api-host: ca.api.opentext.com - change for other regions
   tenant-id: <tenantId>
   client-id: <clientId>
   client-secret: <clientSecret>

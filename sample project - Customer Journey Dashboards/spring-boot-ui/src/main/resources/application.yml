@@ -37,17 +37,12 @@ rest-server:
 # This is the target api server. Adjust parameters as needed.
 #
 api-server:
-  scheme: https
-  host: expctrapiserver
-  port: 9023
-  context: /
-  query: query?count=-1
-  oauth2:
-    token-url: http://otdsserver/otdsws/oauth2/token
-    grant-type: client_credentials
-    client-id: yourclientid
-    client-secret: yourclientsecret
-    cachable: false
+  api-host: us.api.opentext.com
+  journey-url: https://${api-server.api-host}/journey
+  auth-url: https://${api-server.api-host}
+  grant-type: client_credentials
+  client-id: yourclientid
+  client-secret: yourclientsecret
       
 logging:
   level:

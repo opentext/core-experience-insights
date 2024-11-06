@@ -13,7 +13,7 @@ package com.opentext.sample.ui.exception;
 
 import java.util.List;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,7 +35,7 @@ import lombok.Singular;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RestErrorMessage {
 
-  private final HttpStatus status;
+  private final HttpStatusCode status;
 
   private final HttpHeaders headers;
 

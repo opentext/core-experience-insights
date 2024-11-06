@@ -1,0 +1,43 @@
+{
+   
+    "browsers": ["chrome"],
+    "src": ["test/functional/pages/*-test.js"],
+
+    "speed": 1,
+    "selectorTimeout": 25000,
+    "assertionTimeout": 30000,
+    "pageRequestTimeout": 30000,
+
+    "quarantineMode": false,
+    "debugMode": false,
+    "debugOnFail": false,
+    "stopOnFirstFail": false,
+    "skipJsErrors": true,
+    "skipUncaughtErrors": true,
+    "disablePageCaching": true,
+    "developmentMode": false,
+
+    "disableNativeAutomation": true,
+    
+    "reporter": [
+        {
+            "name": "spec"
+        },
+        {
+            "name": "xunit",
+            "output": "test/functional/test-report/uiTestReport.xml"
+        },
+        {
+            "name": "html",
+            "output": "test/functional/test-report/uiTestReport.html"
+        }
+    ],
+
+    "screenshots": {
+        "path": "test/screenshots",
+        "takeOnFails": true,
+        "pathPattern": "${DATE}_${TIME}/test-${TEST_INDEX}/${USERAGENT}/${FILE_INDEX}.png"
+    }
+
+   
+}

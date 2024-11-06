@@ -13,6 +13,7 @@ package com.opentext.sample.ui.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,17 +22,17 @@ public class RestException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
-  private final HttpStatus httpStatus;
+  private final HttpStatusCode httpStatus;
   private final HttpHeaders headers;
   private final boolean retryable;
 
-  protected RestException(HttpStatus status, HttpHeaders headers, String message, Throwable t) {
+  protected RestException(HttpStatusCode status, HttpHeaders headers, String message, Throwable t) {
     this(status, headers, message, false, t);
   }
 
   @Builder
   private RestException(
-      HttpStatus httpStatus, HttpHeaders headers, String message, boolean retryable, Throwable cause) {
+      HttpStatusCode httpStatus, HttpHeaders headers, String message, boolean retryable, Throwable cause) {
     this.httpStatus = (httpStatus == null) ? HttpStatus.BAD_REQUEST : httpStatus;
     this.headers = headers;
     this.retryable = retryable;

@@ -39,7 +39,9 @@ public class QueryRestController {
   private final WebClient webClient;
 
   /**
-   * Return query response entity for given query. It returns all records as fetch size is set to -1
+   * Return query response entity for given query. It returns all records as fetch size is set to -1. <br>
+   * Note: this implementation is for demo purposes. Normally you'd want to create a service layer with defaults for
+   * urls, errors, WebClient, etc.
    *
    * @return {@link QueryResponse}
    */
@@ -47,29 +49,35 @@ public class QueryRestController {
       value = "/query",
       produces = {"application/json"})
   public Mono<QueryResponse> getQueryResponse(@RequestBody String query) {
-    if (log.isTraceEnabled()) log.trace("getQueryResponse for {}", query);
-    final String contextPath = config.getContext();
 
-    // this is for demo purposes. Normally you'd want to create a service layer with defaults for urls, errors,
-    // WebClient, etc.
+    // if there's a leading path, like /journey on the api gateway URL then this needs to be removed from the results.
+    String contextPath = config.getApiContextPath();
+    if (log.isTraceEnabled()) {
+      log.trace("getQueryResponse for {} {}", config.getQueryUrl(), query);
+    }
+
     return this.webClient
         .post()
-        .uri(config.getBaseUrl() + config.getQuery())
+        .uri(config.getQueryUrl())
         .bodyValue(query)
         .retrieve()
         .bodyToMono(QueryResponse.class)
         .map(
             response -> {
-              if (response.getSelf() != null) {
-                response.setSelf(response.getSelf().replace(contextPath, "/"));
-              }
+              // if API gateway contextPath is, say, /journey, then we want to remove these from the links below as they
+              // will not work if included.
+              if (null != contextPath && contextPath.length() > 1) {
+                if (response.getSelf() != null) {
+                  response.setSelf(response.getSelf().replace(contextPath, ""));
+                }
 
-              if (response.getFirst() != null) {
-                response.setFirst(response.getFirst().replace(contextPath, "/"));
-              }
+                if (response.getFirst() != null) {
+                  response.setFirst(response.getFirst().replace(contextPath, ""));
+                }
 
-              if (response.getNext() != null) {
-                response.setNext(response.getNext().replace(contextPath, "/"));
+                if (response.getNext() != null) {
+                  response.setNext(response.getNext().replace(contextPath, ""));
+                }
               }
               return response;
             });

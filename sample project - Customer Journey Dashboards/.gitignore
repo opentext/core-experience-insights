@@ -1,0 +1,14 @@
+
+**/.project
+**/.classpath
+**/.settings
+**/.metadata
+**/dist
+**/node_modules
+**/target/
+bin/**
+spring-boot-ui/configuration.properties
+spring-boot-ui/src/main/resources/application-user.yml
+reactjs/test/functional/config.json
+reactjs/test/screenshots/*
+reactjs/test/functional/test-report/*

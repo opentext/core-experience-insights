@@ -21,7 +21,7 @@ class ErrorDisplay extends Component {
                     {error}
                 </p>
                 <p className="small">
-                    {errorInfo && errorInfo.componentStack}
+                    {errorInfo?.componentStack}
                 </p>
             </div>
         )

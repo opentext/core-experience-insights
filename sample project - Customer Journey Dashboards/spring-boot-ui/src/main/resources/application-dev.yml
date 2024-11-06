@@ -1,8 +1,7 @@
-spring:
-  config:
-    activate:
-      on-profile: dev
-      
+server:
+  servlet:
+    context-path: /
+
 management:
   endpoints:
     web:
@@ -10,20 +9,11 @@ management:
         allowed-origins: http://localhost:5000
         allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH,HEAD
 
-
 api-server:
-  scheme: http
-  host: apihost        
-  port: 9023
-  context: /api/v1/analyses/
-  oauth2:
-    token-url: http://otdsserver/otdsws/oauth2/token
-    grant-type: password
-    username: username
-    password: userpassword
-    client-id: clientid
-    client-secret: clientsecret
-  encryption: true
+  journey-url: http://localhost:9020
+  auth_url: http://expctr-otds-dev-01.otxlab.net:8080
+  client-id: yourclientid
+  client-secret: yourclientsecret
   exception:
     debug: true
 

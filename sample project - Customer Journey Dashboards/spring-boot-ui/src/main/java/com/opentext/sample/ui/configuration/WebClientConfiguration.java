@@ -24,9 +24,9 @@ import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.opentext.sample.ui.auth.OAuth2Util;
 import com.opentext.sample.ui.exception.RestException;
 import com.opentext.sample.ui.util.Json;
-import com.opentext.sample.ui.util.OAuth2Util;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,7 +112,7 @@ public class WebClientConfiguration {
   private ExchangeFilterFunction getErrorFilter() {
     return ExchangeFilterFunction.ofResponseProcessor(
         response -> {
-          HttpStatus status = response.statusCode();
+          HttpStatus status = HttpStatus.valueOf(response.statusCode().value());
           if (HttpStatus.UNAUTHORIZED.equals(status) || HttpStatus.FORBIDDEN.equals(status)) {
             throw new InsufficientAuthenticationException(status.getReasonPhrase());
           } else if (!status.is2xxSuccessful()) {
@@ -125,7 +125,7 @@ public class WebClientConfiguration {
                       String messageBody =
                           (null != webClientErrorMapper) ? webClientErrorMapper.getMessage() : status.getReasonPhrase();
 
-                      log.error("Received an error response from REST call: {}", webClientErrorMapper);
+                      log.error("Received an error response from REST call: {}", exceptionResponseBody);
                       return Mono.error(
                           RestException.builder()
                               .httpStatus(status)
